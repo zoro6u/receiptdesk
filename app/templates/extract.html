@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Extract invoice{% endblock %}
+{% block content %}
+<h1 id="page-title">Extract invoice</h1>
+
+<section class="panel" id="input-panel">
+  <div class="tabs" role="tablist" aria-label="Input method">
+    <button role="tab" id="tab-text" aria-controls="pane-text" aria-selected="true" class="tab">Paste text</button>
+    <button role="tab" id="tab-file" aria-controls="pane-file" aria-selected="false" class="tab" tabindex="-1">Upload file</button>
+  </div>
+  <div class="pad">
+    <div role="tabpanel" id="pane-text" aria-labelledby="tab-text">
+      <label for="invoice-text">Invoice text</label>
+      <textarea id="invoice-text" rows="9" placeholder="Paste the text of an invoice or receipt here…"></textarea>
+    </div>
+    <div role="tabpanel" id="pane-file" aria-labelledby="tab-file" hidden>
+      <label id="drop" class="drop" for="file-input" tabindex="0">
+        <strong>Drop a file here</strong> or click to choose
+        <span class="muted small">PDF, PNG, JPG · up to {{ max_upload_mb }} MB · first {{ max_pdf_pages }} PDF pages</span>
+        <span id="file-name" class="small"></span>
+      </label>
+      <input id="file-input" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" hidden>
+      <p class="muted small">Scanned documents and photos use local OCR (Tesseract). English works best; blurry or skewed scans give poor results.</p>
+    </div>
+    <div class="row">
+      <button class="btn primary" id="extract-btn">Extract with Gemma</button>
+      <span id="status" class="muted" role="status" aria-live="polite"></span>
+    </div>
+    <div id="input-error" class="alert error" role="alert" hidden></div>
+  </div>
+</section>
+
+<section class="panel" id="review-panel" hidden aria-labelledby="review-title">
+  <div class="panel-head"><h2 id="review-title">Review and confirm</h2><span class="badge" id="source-badge"></span></div>
+  <div class="pad">
+    <div id="warnings" class="alert warn" hidden>
+      <strong>Please check:</strong><ul id="warning-list"></ul>
+    </div>
+    <p class="muted small">These values are an AI suggestion. Nothing is saved until you confirm.</p>
+    <form id="expense-form" novalidate>
+      <div class="grid">
+        <div class="span2"><label for="f-supplier">Supplier *</label><input id="f-supplier" name="supplier" maxlength="300" required></div>
+        <div><label for="f-invoice_number">Invoice number</label><input id="f-invoice_number" name="invoice_number" maxlength="100"></div>
+        <div><label for="f-invoice_date">Invoice date</label><input id="f-invoice_date" name="invoice_date" type="date"></div>
+        <div><label for="f-currency">Currency (3 letters)</label><input id="f-currency" name="currency" maxlength="3" placeholder="RWF" style="text-transform:uppercase"></div>
+        <div><label for="f-category">Category</label><input id="f-category" name="category" maxlength="100" list="cats">
+          <datalist id="cats"><option>Software</option><option>Travel</option><option>Office</option><option>Utilities</option><option>Meals</option><option>Equipment</option></datalist></div>
+        <div><label for="f-subtotal">Subtotal</label><input id="f-subtotal" name="subtotal" inputmode="decimal"></div>
+        <div><label for="f-tax">Tax</label><input id="f-tax" name="tax" inputmode="decimal"></div>
+        <div><label for="f-total">Total *</label><input id="f-total" name="total" inputmode="decimal" required></div>
+        <div class="span3"><label for="f-notes">Notes</label><textarea id="f-notes" name="notes" rows="2" maxlength="5000"></textarea></div>
+      </div>
+      <div id="form-error" class="alert error" role="alert" hidden></div>
+      <div class="row end">
+        <button type="button" class="btn" id="cancel-btn">Cancel</button>
+        <button type="submit" class="btn primary" id="save-btn">Confirm and save</button>
+      </div>
+    </form>
+    <details id="ocr-details" hidden><summary>Text read from the document (OCR)</summary><pre id="ocr-text"></pre></details>
+  </div>
+</section>
+{% endblock %}

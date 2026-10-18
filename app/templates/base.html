@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ReceiptDesk{% endblock %} · ReceiptDesk</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body data-page="{{ active }}" data-max-mb="{{ max_upload_mb }}">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="wrap bar">
+      <a class="brand" href="/"><span class="logo" aria-hidden="true">R</span>ReceiptDesk</a>
+      <nav aria-label="Main">
+        <a href="/" {% if active == 'dashboard' %}aria-current="page"{% endif %}>Dashboard</a>
+        <a href="/extract" {% if active == 'extract' %}aria-current="page"{% endif %}>Extract invoice</a>
+        <a href="/expenses" {% if active == 'expenses' %}aria-current="page"{% endif %}>Expenses</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main" class="wrap">{% block content %}{% endblock %}</main>
+  <footer class="wrap foot">
+    <p>Extraction runs on your machine with <code>{{ model }}</code> through Ollama. OCR runs locally with Tesseract.
+       Records are stored in a local SQLite file. Uploaded files are deleted right after processing.
+       AI output can be wrong: always check it against the original.</p>
+  </footer>
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+  <dialog id="confirm-dialog">
+    <form method="dialog">
+      <h2 id="confirm-title">Are you sure?</h2>
+      <p id="confirm-body"></p>
+      <div class="row end"><button value="cancel" class="btn">Cancel</button>
+        <button value="ok" class="btn danger" id="confirm-ok">Delete</button></div>
+    </form>
+  </dialog>
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>

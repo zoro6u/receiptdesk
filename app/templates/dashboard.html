@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Turn receipts into expense records</h1>
+    <p class="muted">Paste invoice text or upload a PDF or photo. A local Gemma model suggests the fields, you review them, then save. Export to CSV for Excel or Google Sheets.</p>
+  </div>
+  <a class="btn primary" href="/extract">Extract invoice</a>
+</section>
+
+<section class="cards" aria-label="Summary" id="summary">
+  <div class="card"><h2 class="card-label">Records</h2><p class="big" id="sum-count">–</p></div>
+  <div class="card"><h2 class="card-label">Total by currency</h2><div id="sum-totals" class="totals"><p class="muted">–</p></div></div>
+  <div class="card"><h2 class="card-label">Most-used currency</h2><p class="big" id="sum-currency">–</p></div>
+</section>
+
+<section class="panel">
+  <div class="panel-head"><h2>Recent expenses</h2><a href="/expenses">View all</a></div>
+  <div id="recent" aria-live="polite"><p class="muted pad">Loading…</p></div>
+</section>
+{% endblock %}

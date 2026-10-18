@@ -1,0 +1,19 @@
+INVOICE  (fictional sample data for ReceiptDesk demos)
+
+Kigali Print & Design Ltd
+KG 7 Ave, Kigali, Rwanda
+TIN: 000000000 (fictional)
+
+Invoice No: KPD-2025-0042
+Invoice Date: 2025-09-18
+Bill To: Example Freelancer
+
+Description                         Qty   Unit price     Amount
+Business cards (500)                  2       15,000     30,000
+Brochure design                       1       85,000     85,000
+
+Subtotal:   115,000 RWF
+VAT (18%):   20,700 RWF
+TOTAL:      135,700 RWF
+
+Payment due within 14 days. Thank you!

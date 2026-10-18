@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Expenses{% endblock %}
+{% block content %}
+<div class="row between"><h1>Expenses</h1><a class="btn primary" href="/extract">Extract invoice</a></div>
+<section class="panel">
+  <form id="filters" class="filters pad" role="search">
+    <div><label for="q">Search</label><input id="q" type="search" placeholder="Supplier or invoice number"></div>
+    <div><label for="currency">Currency</label><select id="currency"><option value="">All</option></select></div>
+    <div><label for="date_from">From</label><input id="date_from" type="date"></div>
+    <div><label for="date_to">To</label><input id="date_to" type="date"></div>
+    <div><label for="sort">Sort by</label>
+      <select id="sort"><option value="date:desc">Date, newest</option><option value="date:asc">Date, oldest</option>
+        <option value="amount:desc">Amount, high to low</option><option value="amount:asc">Amount, low to high</option>
+        <option value="created:desc">Recently added</option></select></div>
+  </form>
+  <div class="row between pad tight">
+    <p id="result-count" class="muted" aria-live="polite"></p>
+    <div class="row"><button class="btn" id="export-selected" disabled>Export selected</button>
+      <a class="btn" id="export-all" href="/api/expenses/export.csv" download>Export CSV</a></div>
+  </div>
+  <div id="table-area" aria-live="polite"><p class="muted pad">Loading…</p></div>
+  <div class="row between pad" id="pager" hidden>
+    <button class="btn" id="prev">Previous</button><span id="page-info" class="muted"></span><button class="btn" id="next">Next</button>
+  </div>
+</section>
+<p class="muted small">“Export CSV” exports everything that matches the current search and filters.</p>
+{% endblock %}
